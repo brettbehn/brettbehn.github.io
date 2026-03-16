@@ -15,7 +15,7 @@ My website
 <hr>
 <h>snowboarding</h>
 <p>i also love to snowboard when i cant mountain bike. So in the winter</p>
-<img src"https://upload.wikimedia.org/wikipedia/commons/2/28/Snowboard_pow.jpg" alt="snowboard">
+<img src="https://upload.wikimedia.org/wikipedia/commons/1/16/Snowboarding.jpg" alt="snowboard">
 <hr>
 <h>who is the goat</h>
 <p>it is a fact that mj is better than lebron. 6 and 0 in finals and way more efficient in his carrer. Theres no argument against that</p>
