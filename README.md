@@ -31,5 +31,5 @@ My website
 <hr>
 <h>pets</h>
 <p>i have one pet. It is a bunny named snowy</p>
-<img src> 
+<img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Oryctolagus_cuniculus_Rcdo.jpg" alt="bunny"> 
 <hr>
