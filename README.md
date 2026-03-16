@@ -33,3 +33,7 @@ My website
 <p>i have one pet. It is a bunny named snowy</p>
 <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Oryctolagus_cuniculus_Rcdo.jpg" alt="bunny"> 
 <hr>
+<h>travel</h>
+<p> my favorite place ive been to is either oregons part of the west coast or the san diego part of the west coast. Their both very different so its hard to pick one</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Hood_River_OR_-_aerial.jpg" alt="oregon" 
+<hr>
