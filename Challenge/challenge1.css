@@ -1,5 +1,23 @@
 body{
 background-color: black;
 }
+.square{
+    width: 200px;
+    height : 200px;
+    background-color: green;
 
+    position: absolute;
+    top: 25px; /* decreased by 5px from 30px */
+    left: 50%;
+    transform: translateX(-50%);
+}
 
+.square2{
+    width: 200px;
+    height: 200px;
+    background-color: yellow;
+    position: absolute;
+    top: 245px;
+    left: 50%;
+    transform: translateX(-50%);
+}
