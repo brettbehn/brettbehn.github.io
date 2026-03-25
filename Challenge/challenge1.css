@@ -2,8 +2,8 @@ body{
 background-color: black;
 }
 .square{
-    width: 200px;
-    height : 200px;
+    width: 220px;
+    height : 220px;
     background-color: green;
 
     position: absolute;
@@ -13,11 +13,21 @@ background-color: black;
 }
 
 .square2{
-    width: 200px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
     background-color: yellow;
     position: absolute;
-    top: 245px;
+    top: 265px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.square3{
+    width: 220px;
+    height: 220px;
+    background-color: red;
+    position: absolute;
+    top: 505px;
     left: 50%;
     transform: translateX(-50%);
 }
