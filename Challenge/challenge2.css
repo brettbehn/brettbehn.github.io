@@ -1,4 +1,35 @@
 ﻿body {
-    font-size: 90px;
+    font-size: 80px;
     text-align: left;
+}
+.salmon-bg {
+    background-color: lightpink;
+    border: 10px solid blue;
+    display: inline-block;
+    margin-right: 0px;
+    vertical-align: top;
+}
+.The {
+    color: red;
+}
+.quick {
+    color: orange;
+}
+.brown {
+    color: yellow;
+}
+.fox {
+    color: green;
+}
+.jumps {
+    color: blue;
+}
+.over {
+    color: #800080;
+}
+.black-bg {
+    background-color: black;
+    border: 10px solid green;
+    display: inline-block;
+    vertical-align: top;
 }
