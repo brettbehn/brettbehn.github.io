@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    background-color: lightgray;
+}
+
+.container {
+    display: flex;
+    width: 2300px;
+    height: 800px;
+    margin: 250px auto;
+}
+
+/* LEFT */
+.left {
+    flex: 2;
+    background-color: #e3a6ad; /* pink */
+}
+
+.middle {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.top {
+    flex: 1;
+    background-color: #6fd3b0; 
+}
+
+.center {
+    flex: 1;
+    background-color: #5f88cf; 
+}
+
+.bottom {
+    flex: 1;
+    background-color: #c08ac4; 
+}
+
+.right {
+    flex: 2;
+    background-color: #d8cf7a; 
+}
