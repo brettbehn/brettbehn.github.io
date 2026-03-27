@@ -6,7 +6,7 @@
     background-color: lightpink;
     border: 10px solid blue;
     display: inline-block;
-    margin-right: 0px;
+    margin-right: -20px;
     vertical-align: top;
 }
 .The {
@@ -32,4 +32,19 @@
     border: 10px solid green;
     display: inline-block;
     vertical-align: top;
+}
+.lazy {
+    color: pink;
+}
+
+.dog {
+    color: white;
+}
+
+.end {
+    color: gray;
+}
+
+.period {
+    color: gray;
 }
