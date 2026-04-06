@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    background: white;
+}
+
+.row {
+    display: flex;
+    height: 70px;
+}
+
+.row div {
+    height: 100%;
+}
+
+.red { background: red; width: 10%; }
+.pink { background: lightcoral; width: 90%; }
+
+.yellow { background: yellow; width: 25%; }
+.cream { background: ivory; width: 75%; }
+
+.blue-dark { background: blue; width: 40%; }
+.blue-light { background: lightskyblue; width: 60%; }
+
+.green-dark { background: green; width: 50%; }
+.green-light { background: lightgreen; width: 50%; }
+
+.purple-dark { background: purple; width: 60%; }
+.purple-light { background: plum; width: 40%; }
+
+.mint { background: palegreen; width: 65%; }
+.sky { background: lightskyblue; width: 70%; }
