@@ -1,0 +1,16 @@
+body {
+    margin: 0;
+    background-color: lightgray;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+}
+
+  
