@@ -159,11 +159,11 @@ html, body {
   margin-bottom: 10px;
 }
 
-/* Titanium image — wide & relatively short, matching reference */
+
 .hero-titanium {
-  width: 520px;                 /* wider */
+  width: 520px;               
   max-width: 90%;
-  height: 120px;                /* short fixed height like reference */
+  height: 120px;                
   object-fit: contain;
   margin-bottom: 24px;
 }
@@ -171,7 +171,7 @@ html, body {
 .hero-price {
   font-size: 30px;
   font-weight: 400;
-  color: #f5f5f7;
+  color: gray;
   margin-bottom: 20px;
 }
 
