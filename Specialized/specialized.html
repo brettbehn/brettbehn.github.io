@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S-Works Demo 11 – Specialized</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+  body {
+    margin: 0 100px;
+    background: #0a0a0a;
+    color: #fff;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+ 
+  a { color: inherit; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+ 
+  /* ── ANNOUNCEMENT BAR ── */
+  .announce-bar {
+    background: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 24px;
+    font-size: 12px;
+    color: #ccc;
+    border-bottom: none;
+  }
+  .announce-bar a { color: #ccc; }
+ 
+  /* ── NAV ── */
+  nav {
+    background: #0a0a0a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0px;
+    height: 56px;
+    border-bottom: 1px solid #222;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-logo {
+    font-size: 20px;
+    font-weight: 900;
+    margin-left: 100px;
+    letter-spacing: 0.05em;
+    font-style: italic;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .nav-links a { color: #bbb; }
+  .nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 13px;
+    color: #ccc;
+  }
+  .nav-icons svg { width: 20px; height: 20px; fill: #fff; cursor: pointer; }
+ 
+  /* ── PAGE LAYOUT ── */
+  .page-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 40px;
+    max-width: 100%;
+    margin: 0 100px;
+  }
+ 
+  /* ── LEFT COLUMN ── */
+  .left-col { min-width: 0; }
+ 
+  /* ── RIGHT STICKY PANEL ── */
+  .right-panel {
+    position: sticky;
+    top: 56px;
+    height: calc(100vh - 56px);
+    overflow-y: scroll;
+    scrollbar-width: none;
+  }
+  .right-panel::-webkit-scrollbar { display: none;
+    -ms-overflow-style: none;
+    padding: 16px 20px 100px;
+    border-left: 1px solid #222;
+    background: #0a0a0a;
+  }
+ 
+  /* ── BREADCRUMB ── */
+  .breadcrumb {
+    font-size: 12px;
+    color: #fff;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .breadcrumb span { color: #fff; }
+ 
+  /* ── PRODUCT TITLE ── */
+  .product-title { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
+  .product-subtitle { font-size: 13px; color: #fff; margin-bottom: 16px; }
+  .product-price { font-size: 22px; font-weight: 400; margin-bottom: 8px; }
+ 
+  /* ── STARS ── */
+  .stars { display: flex; align-items: center; gap: 6px; margin-bottom: 20px; }
+  .stars .star-count { font-size: 13px; font-weight: 500; color: #fff; }
+  .star { color: #fff; font-size: 15px; }
+  .stars a { color: #fff; font-size: 12px; text-decoration: underline; }
+ 
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1px solid #fff; margin: 16px 0; }
+ 
+  /* ── COLOR PICKER ── */
+  .section-label { font-size: 13px; margin-bottom: 10px; color: #aaa; }
+  .section-label span { font-weight: 600; }
+  .color-swatches { display: flex; gap: 10px; margin-bottom: 20px; }
+  .swatch {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+  }
+  .swatch.active { border-color: #fff; }
+  .swatch-blue { background: radial-gradient(circle at 40% 40%, #b8c8e8, #6a7fa8); }
+  .swatch-charcoal { background: radial-gradient(circle at 40% 40%, #999, #444); }
+ 
+  /* ── SIZE BOX ── */
+  .size-widget {
+    background: #2a2a2a;
+    border-radius: 6px;
+    padding: 14px;
+    margin-bottom: 16px;
+  }
+  .size-widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .size-widget-header span { font-size: 13px; font-weight: 600; color: #aaa; }
+  .toggle-group { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #aaa; }
+  .toggle {
+    width: 36px; height: 18px;
+    background: #e8401c;
+    border-radius: 9px;
+    position: relative;
+    cursor: pointer;
+  }
+  .toggle::after {
+    content: '';
+    position: absolute;
+    right: 2px; top: 2px;
+    width: 14px; height: 14px;
+    background: #fff;
+    border-radius: 50%;
+  }
+  .size-hint { font-size: 11px; color: #888; margin-bottom: 10px; }
+  .size-inputs { display: flex; gap: 8px; align-items: center; }
+  .size-inputs input {
+    background: #000;
+    border: 1px solid #444;
+    color: #fff;
+    padding: 8px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    width: 80px;
+  }
+  .size-inputs button {
+    background: #2a2a2a;
+    border: 1px solid #444;
+    color: #888;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .size-link { font-size: 12px; color: #aaa; text-decoration: underline; display: block; margin-top: 8px; cursor: pointer; }
+ 
+  /* ── SIZE SELECTOR ── */
+  .size-selector-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .size-selector-header span { font-size: 13px; font-weight: 600; }
+  .size-selector-header a { font-size: 12px; color: #fff; text-decoration: underline; }
+  .size-buttons { display: flex; gap: 8px; margin-bottom: 20px; }
+  .size-btn {
+    border: 1px solid #555;
+    background: transparent;
+    color: #fff;
+    padding: 10px 0;
+    width: 70px;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .size-btn:hover, .size-btn.active { border-color: #fff; }
+ 
+  /* ── DELIVERY ── */
+  .delivery-label { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+  .delivery-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }
+  .delivery-card {
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 12px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .delivery-card:hover { border-color: #888; }
+  .delivery-card .d-icon { font-size: 20px; margin-bottom: 6px; }
+  .delivery-card .d-title { font-size: 13px; font-weight: 600; display: block; }
+  .delivery-card .d-sub { font-size: 11px; color: #888; display: block; }
+ 
+  /* ── COMPLETE YOUR RIDE ── */
+  .cyr-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 12px 0;
+    border-top: 1px solid #2a2a2a;
+  }
+  .cyr-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #1e1e1e;
+  }
+  .cyr-img {
+    width: 64px; height: 64px;
+    object-fit: cover;
+    border-radius: 4px;
+    background: #222;
+    flex-shrink: 0;
+  }
+  .cyr-info { flex: 1; }
+  .cyr-name { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+  .cyr-swatch { width: 14px; height: 14px; border-radius: 50%; background: #333; display: inline-block; margin-bottom: 4px; }
+  .cyr-price { font-size: 13px; }
+  .cyr-price .old { color: #888; text-decoration: line-through; margin-left: 6px; font-size: 12px; }
+  .cyr-btn {
+    border: 1px solid #555;
+    background: transparent;
+    color: #fff;
+    padding: 7px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .cyr-dots { display: flex; justify-content: center; gap: 6px; margin: 10px 0; }
+  .cyr-dot { width: 8px; height: 8px; border-radius: 50%; background: #555; }
+  .cyr-dot.active { background: #fff; }
+ 
+  .save-later { font-size: 13px; color: #aaa; text-decoration: underline; display: flex; align-items: center; gap: 6px; padding: 12px 0; cursor: pointer; border-top: 1px solid #2a2a2a; }
+ 
+  /* ── STICKY BOTTOM BAR ── */
+  .sticky-buy {
+    position: sticky;
+    bottom: 0;
+    background: #0a0a0a;
+    border-top: 1px solid #333;
+    padding: 12px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 200;
+  }
+  .sticky-buy .sticky-title { font-size: 14px; font-weight: 600; }
+  .sticky-buy .sticky-chevron { font-size: 14px; color: #888; }
+  .btn-choose {
+    background: #fff;
+    color: #000;
+    border: none;
+    padding: 14px 32px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.15s;
+  }
+  .btn-choose:hover { background: #ddd; }
+ 
+  /* ══════════════════════════════════
+     MAIN CONTENT SECTIONS
+  ══════════════════════════════════ */
+ 
+  /* ── HERO IMAGE ── */
+  .hero-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    background: #1a1a1a;
+    display: block;
+  }
+  .hero-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    font-size: 13px;
+  }
+ 
+  /* ── THUMBNAIL STRIP ── */
+  .thumbs {
+    display: flex;
+    gap: 6px;
+    padding: 10px 0;
+    overflow-x: auto;
+    justify-content: center;
+  }
+  .thumb {
+    width: 80px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 3px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    flex-shrink: 0;
+    background: #222;
+  }
+  .thumb.active { border-color: #fff; }
+ 
+  /* ── CONTENT SECTIONS ── */
+  .section { padding: 40px 32px; }
+  .section-dark { background: #0a0a0a; }
+  .section-mid { background: #111; }
+ 
+  /* ── SPEED OF TRUST ── */
+  .speed-of-trust {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 40px 32px;
+    background: #0a0a0a;
+  }
+  .speed-left h2 { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+  .speed-left h3 { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #ddd; }
+  .speed-left p { font-size: 13px; color: #aaa; line-height: 1.7; }
+ 
+  .at-a-glance h4 { font-size: 14px; font-weight: 600; margin-bottom: 12px; color: #aaa; }
+  .spec-row { padding: 10px 0; border-top: 1px solid #2a2a2a; }
+  .spec-row:last-child { border-bottom: 1px solid #2a2a2a; }
+  .spec-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+  .spec-value { font-size: 13px; color: #aaa; }
+  .view-specs { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; margin-top: 16px; text-decoration: underline; cursor: pointer; }
+ 
+  /* ── FULL-BLEED IMAGE SECTION ── */
+  .fullbleed {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .fullbleed-img {
+    width: 100%;
+    height: 520px;
+    object-fit: cover;
+    display: block;
+    background: #1a1a1a;
+  }
+  .fullbleed-overlay {
+    position: absolute;
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    max-width: 320px;
+  }
+  .fullbleed-overlay h2 { font-size: 36px; font-weight: 700; line-height: 1.15; margin-bottom: 12px; }
+  .fullbleed-overlay .sub { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #ddd; }
+  .fullbleed-overlay p { font-size: 13px; color: #ccc; line-height: 1.7; margin-bottom: 20px; }
+  .btn-outline {
+    border: 2px solid #fff;
+    background: transparent;
+    color: #fff;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .btn-outline:hover { background: #fff; color: #000; }
+ 
+  /* ── VIDEO SECTION ── */
+  .video-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 420px;
+    background: #111;
+  }
+  .video-text {
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .video-text h2 { font-size: 32px; font-weight: 700; margin-bottom: 12px; line-height: 1.2; }
+  .video-text p { font-size: 13px; color: #aaa; margin-bottom: 24px; line-height: 1.7; }
+  .video-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #222;
+  }
+ 
+  /* ── 3-CARD GRID ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: #0a0a0a;
+  }
+  .feature-card {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .feature-card-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    background: #1a1a1a;
+    display: block;
+  }
+  .feature-card-text {
+    padding: 20px 20px 60px;
+    background: #0a0a0a;
+  }
+  .feature-card-text h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
+  .feature-card-text p { font-size: 13px; color: #aaa; line-height: 1.6; }
+  .card-plus {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 32px; height: 32px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    color: #fff;
+    background: rgba(0,0,0,0.5);
+  }
+  .card-overflow-label {
+    font-size: 26px;
+    font-weight: 700;
+    padding: 0 20px 20px;
+    background: #0a0a0a;
+  }
+ 
+  /* ── 2-COLUMN TECH ── */
+  .tech-section { padding: 40px 32px; background: #0a0a0a; }
+  .tech-title { font-size: 30px; font-weight: 700; margin-bottom: 32px; }
+  .tech-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .tech-item h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .tech-item p { font-size: 13px; color: #aaa; line-height: 1.7; margin-bottom: 16px; }
+  .tech-item-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 6px;
+    background: #1a1a1a;
+    display: block;
+    position: relative;
+  }
+  .tech-img-wrap { position: relative; }
+  .img-plus {
+    position: absolute;
+    bottom: 12px; right: 12px;
+    width: 32px; height: 32px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    color: #fff;
+    background: rgba(0,0,0,0.5);
+    cursor: pointer;
+  }
+ 
+  /* ── 3-CARD LOWER GRID (Podcasts, Racing, Testing) ── */
+  .lower-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    background: #0a0a0a;
+    padding: 0 32px 40px;
+  }
+  .lower-card { background: #0a0a0a; }
+  .lower-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; line-height: 1.3; }
+  .lower-card p { font-size: 13px; color: #aaa; line-height: 1.6; margin-bottom: 16px; }
+  .lower-card-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 6px;
+    background: #1a1a1a;
+    display: block;
+  }
+  .lower-card-img-wrap { position: relative; }
+ 
+  /* ── FULL-WIDTH HERO SLIDESHOW ── */
+  .slideshow-wrap { position: relative; }
+  .slideshow-img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    display: block;
+    background: #1a1a1a;
+  }
+  .slideshow-arrows {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .slide-arrow {
+    width: 32px; height: 32px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .slide-dots { display: flex; gap: 4px; }
+  .slide-dot { width: 8px; height: 8px; border-radius: 50%; background: #888; }
+  .slide-dot.active { background: #fff; }
+ 
+  /* ── DEMO LINEUP ── */
+  .lineup-section { padding: 40px 32px; background: #0a0a0a; }
+  .lineup-section h2 { font-size: 26px; font-weight: 700; margin-bottom: 24px; }
+  .lineup-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    max-width: 640px;
+  }
+  .lineup-card {
+    background: #f0ede8;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .lineup-card-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: contain;
+    padding: 20px;
+    background: #f0ede8;
+    display: block;
+  }
+  .lineup-card-body {
+    margin: 0 100px;
+    background: #2a2a2a;
+    padding: 16px;
+  }
+  .lineup-card-body h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .lineup-card-body p { font-size: 12px; color: #aaa; line-height: 1.5; }
+ 
+  /* ── ACCORDION ── */
+  .accordion-section { padding: 0 32px; background: #0a0a0a; }
+  .accordion-item {
+    border-top: 1px solid #2a2a2a;
+    cursor: pointer;
+  }
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .accordion-chevron { font-size: 18px; color: #aaa; transition: transform 0.2s; }
+  .accordion-item.open .accordion-chevron { transform: rotate(180deg); }
+  .accordion-body {
+    margin: 0 100px;
+    display: none;
+    padding: 0 0 20px;
+    font-size: 13px;
+    color: #aaa;
+    line-height: 1.7;
+  }
+  .accordion-item.open .accordion-body {
+    margin: 0 100px; display: block; }
+ 
+  /* ── REVIEWS ── */
+  .reviews-section { padding: 40px 32px; background: #0a0a0a; }
+  .reviews-section h2 { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+  .reviews-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .reviews-meta .score { font-size: 15px; font-weight: 600; }
+  .reviews-meta a { font-size: 13px; color: #aaa; text-decoration: underline; }
+  .reviews-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .btn-review {
+    border: 1px solid #fff;
+    background: transparent;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .sort-select {
+    background: #1a1a1a;
+    border: 1px solid #444;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .reviews-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .review-card {
+    background: #1a1a1a;
+    border-radius: 6px;
+    padding: 16px;
+  }
+  .review-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .review-card-header .date { font-size: 12px; color: #888; }
+  .review-title { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+  .review-body {
+    margin: 0 100px; font-size: 13px; color: #bbb; line-height: 1.6; margin-bottom: 10px; }
+  .review-recommend { font-size: 13px; color: #aaa; margin-bottom: 6px; }
+  .review-name { font-size: 13px; color: #aaa; margin-bottom: 10px; }
+  .review-divider { border-top: 1px solid #333; margin: 10px 0; }
+  .review-helpful { font-size: 12px; color: #aaa; display: flex; align-items: center; gap: 10px; }
+  .review-helpful .helpful-label { margin-right: 4px; }
+  .helpful-btn { display: flex; align-items: center; gap: 4px; cursor: pointer; }
+ 
+  /* ── FOOTER ── */
+  footer {
+    background: #0a0a0a;
+    border-top: 1px solid #222;
+    padding: 40px 32px 24px;
+  }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+  }
+  .footer-logo {
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    font-style: italic;
+    text-transform: uppercase;
+  }
+  .footer-socials { display: flex; gap: 16px; font-size: 20px; }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  .footer-col h4 { font-size: 13px; font-weight: 600; margin-bottom: 14px; }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 8px; }
+  .footer-col a { font-size: 13px; color: #888; }
+  .footer-col a:hover { color: #fff; }
+ 
+  .newsletter-label { font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+  .newsletter-form {
+    display: flex;
+    border: 1px solid #444;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .newsletter-form input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #fff;
+    padding: 10px 12px;
+    font-size: 13px;
+    outline: none;
+  }
+  .newsletter-form input::placeholder { color: #666; }
+  .newsletter-form button {
+    background: transparent;
+    border: none;
+    color: #fff;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .newsletter-disclaimer { font-size: 11px; color: #666; line-height: 1.6; margin-bottom: 16px; }
+  .app-badges { display: flex; gap: 10px; }
+  .app-badge {
+    border: 1px solid #444;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 11px;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+  }
+  .app-badge .badge-sub { color: #888; font-size: 10px; }
+  .app-badge .badge-name { font-weight: 600; font-size: 13px; }
+ 
+  .footer-bottom {
+    border-top: 1px solid #2a2a2a;
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .footer-legal { display: flex; gap: 20px; flex-wrap: wrap; font-size: 12px; color: #666; }
+  .footer-legal a { color: #666; }
+  .footer-copy { font-size: 12px; color: #555; }
+  .footer-region { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #666; margin-top: 4px; }
+</style>
+</head>
+<body>
+<!-- ANNOUNCEMENT BAR -->
+<div class="announce-bar">
+  <span>Limited time financing with Affirm</span>
+  <div style="display:flex;gap:24px;margin-left:auto;">
+    <a href="#">Support Center</a>
+    <a href="#">Find A Store</a>
+    <a href="#">55401</a>
+  </div>
+</div>
+ 
+<!-- NAV -->
+<nav>
+  <img src="specialized logo.png" alt="Specialized" style="height:28px; margin-left:100px;">
+  <ul class="nav-links">
+    <li><a href="#">Bikes</a></li>
+    <li><a href="#">Gear</a></li>
+    <li><a href="#">Sale</a></li>
+  </ul>
+  <div class="nav-icons">
+    <svg viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35m0 0A7 7 0 1 0 6.65 6.65a7 7 0 0 0 10 10z" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1" fill="#fff"/><circle cx="19" cy="12" r="1" fill="#fff"/><circle cx="5" cy="12" r="1" fill="#fff"/></svg>
+  </div>
+</nav>
+ 
+<!-- PAGE WRAPPER -->
+<div class="page-wrapper">
+ 
+  <!-- LEFT / MAIN CONTENT -->
+  <div class="left-col">
+ 
+    <!-- HERO IMAGE -->
+    <!-- Replace src with your actual image file path -->
+    <img src="hero-bike.jpg" class="hero-img" alt="S-Works Demo 11 hero"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="hero-placeholder" style="display:none;">[ Hero bike image ]</div>
+ 
+    <!-- THUMBNAIL STRIP -->
+    <div style="padding: 10px 32px; background:#0a0a0a; display:flex; gap:6px; justify-content:center; margin-left:50px;">
+      <!-- Replace src values with your thumbnail image file paths -->
+      <img src="thumb1.jpg" class="thumb active" alt="">
+      <img src="thumb2.jpg" class="thumb" alt="">
+      <img src="thumb3.jpg" class="thumb" alt="">
+      <img src="thumb4.jpg" class="thumb" alt="">
+      <img src="thumb5.jpg" class="thumb" alt="">
+      <img src="thumb6.jpg" class="thumb" alt="">
+      <img src="thumb7.jpg" class="thumb" alt="">
+    </div>
+ 
+    <!-- THE SPEED OF TRUST + AT A GLANCE -->
+    <div class="speed-of-trust">
+      
+      <div class="at-a-glance">
+        <h4>At a Glance</h4>
+        <div class="spec-row">
+          <div class="spec-label">Use</div>
+          <div class="spec-value">World Cup Downhill Racing</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">Frame</div>
+          <div class="spec-value">FACT 11m Carbon Race Chassis w/OBB Linkage</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">Suspension</div>
+          <div class="spec-value">Fork: 200mm RockShox Boxxer Ultimate<br>Shock: RockShox Vivid Coil Ultimate DH (200mm Travel)</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">Drivetrain</div>
+          <div class="spec-value">HighGear Drivetrain, +30mm Clearance<br>SRAM XX DH Transmission</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">Brakes</div>
+          <div class="spec-value">SRAM Maven Ultimate brakes (220/200)</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-label">Wheels</div>
+          <div class="spec-value">Roval Traverse Gravity Rims with DT Swiss 350 hubs</div>
+        </div>
+        <a class="view-specs" href="#">View Full Specs ↓</a>
+      </div>
+    </div>
+ 
+    <!-- THE FRAME OF REFERENCE — full bleed with rider image + overlay text -->
+    <div class="fullbleed">
+      <!-- Replace src with your action rider image -->
+      <img src="rider-action.jpg" class="fullbleed-img" alt="Rider on Demo 11"
+        onerror="this.style.background='#1a1a1a'">
+ 
+    </div>
+ 
+    <!-- VIDEO / ALL YOU NEED TO KNOW SECTION -->
+    <div class="video-section">
+  
+      <!-- Replace src with your bike detail image -->
+      <img src="bike-detail.jpg" class="video-img" alt="Demo 11 detail">
+    </div>
+ 
+    <!-- 3-CARD FEATURE GRID -->
+    <div class="card-grid">
+      <!-- Card 1: Self Aligning Chassis -->
+      <div class="feature-card">
+        <!-- Replace src with your rider/chassis image -->
+        <img src="chassis-rider.jpg" class="feature-card-img" alt="Self aligning chassis">
+        
+        <div class="card-plus">+</div>
+      </div>
+      <!-- Card 2: Geometry -->
+      <div class="feature-card">
+        <!-- Replace src with your geometry diagram image -->
+        <img src="geometry-diagram.jpg" class="feature-card-img" alt="Geometry diagram">
+        <div class="card-plus">+</div>
+      </div>
+      <!-- Card 3: FACT Carbon -->
+      <div class="feature-card">
+        <!-- Replace src with your carbon fork close-up image -->
+        <img src="carbon-fork.jpg" class="feature-card-img" alt="FACT carbon construction">
+        <div class="card-plus">+</div>
+      </div>
+    </div>
+ 
+    <!-- INTEGRATED SUSPENSION SECTION -->
+    <div class="tech-section">
+      
+      <div class="tech-grid">
+        <div class="tech-item">
+          <div class="tech-img-wrap">
+            <!-- Replace src with your HighGear closeup image -->
+            <img src="highgear-closeup.jpg" class="tech-item-img" alt="HighGear Drivetrain">
+            <div class="img-plus">+</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-img-wrap">
+            <!-- Replace src with your OBB linkage image -->
+            <img src="obb-linkage.jpg" class="tech-item-img" alt="OBB Linkage">
+            <div class="img-plus">+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- LOWER 3-CARD GRID (Podcasts, Racing, Testing) -->
+    <div class="lower-card-grid">
+      <div class="lower-card">
+        <div class="lower-card-img-wrap">
+          <!-- Replace src with your podcast/rider portrait image -->
+          <img src="podcast-rider.jpg" class="lower-card-img" alt="Rider podcasts">
+          <div class="img-plus">+</div>
+        </div>
+      </div>
+      <div class="lower-card">
+        <div class="lower-card-img-wrap">
+          <!-- Replace src with your racing/pits image -->
+          <img src="made-in-racing.jpg" class="lower-card-img" alt="Made in racing">
+          <div class="img-plus">+</div>
+        </div>
+      </div>
+      <div class="lower-card">
+        <div class="lower-card-img-wrap">
+          <!-- Replace src with your testing/shock image -->
+          <img src="testing.jpg" class="lower-card-img" alt="Testing">
+          <div class="img-plus">+</div>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- FULL-WIDTH SLIDESHOW IMAGE -->
+    <div class="slideshow-wrap">
+      <!-- Replace src with your hero jump/action shot -->
+      <img src="hero-jump.jpg" class="slideshow-img" alt="Demo 11 in action">
+      <div class="slideshow-arrows">
+        <div class="slide-arrow">&#8249;</div>
+        <div class="slide-dots">
+          <div class="slide-dot"></div>
+          <div class="slide-dot"></div>
+          <div class="slide-dot"></div>
+          <div class="slide-dot active"></div>
+          <div class="slide-dot"></div>
+        </div>
+        <div class="slide-arrow">&#8250;</div>
+      </div>
+    </div>
+ 
+    <!-- THE DEMO LINEUP -->
+    <div class="lineup-section">
+      <h2>The Demo Lineup</h2>
+      <div class="lineup-grid">
+        <div class="lineup-card">
+          <!-- Replace src with your complete bike lineup image -->
+          <img src="lineup-complete.jpg" class="lineup-card-img" alt="S-Works Demo 11 complete">
+          <div class="lineup-card-body">
+            <h3>S-Works Demo 11</h3>
+            <p>FACT 11m Carbon w/ HighGear, RockShox BoXXer Ultimate fork & Vivid Coil Ultimate DH shock, SRAM Maven Ultimate B1 brakes.</p>
+          </div>
+        </div>
+        <div class="lineup-card">
+          <!-- Replace src with your frameset image -->
+          <img src="lineup-frameset.jpg" class="lineup-card-img" alt="S-Works Demo 11 Frameset">
+          <div class="lineup-card-body">
+            <h3>S-Works Demo 11 Frameset</h3>
+            <p>FACT 11m Carbon w/ HighGear, SRAM XX Crankset, Vivid Coil Ultimate DH shock, OBB linkage.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- ACCORDION -->
+    <div class="accordion-section">
+      <div class="accordion-item" onclick="this.classList.toggle('open')">
+        <div class="accordion-header">
+          <span>Technical Specifications</span>
+          <span class="accordion-chevron">&#8964;</span>
+        </div>
+        <div class="accordion-body">
+          Full geometry chart and component spec sheet would go here.
+        </div>
+      </div>
+      <div class="accordion-item" onclick="this.classList.toggle('open')">
+        <div class="accordion-header">
+          <span>Geometry</span>
+          <span class="accordion-chevron">&#8964;</span>
+        </div>
+        <div class="accordion-body">
+          Geometry tables and diagrams would go here.
+        </div>
+      </div>
+      <div class="accordion-item" onclick="this.classList.toggle('open')">
+        <div class="accordion-header">
+          <span>Manual Downloads</span>
+          <span class="accordion-chevron">&#8964;</span>
+        </div>
+        <div class="accordion-body">
+          PDF manual download links would go here.
+        </div>
+      </div>
+    </div>
+ 
+    <!-- RIDER REVIEWS -->
+    <div class="reviews-section">
+      <h2>Rider Reviews</h2>
+      <div class="reviews-meta">
+        <span class="score">5</span>
+        <div>
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <a href="#">2 Reviews</a>
+      </div>
+      <div class="reviews-actions">
+        <button class="btn-review">Write a Review</button>
+        <select class="sort-select">
+          <option>Most recent</option>
+          <option>Highest rated</option>
+          <option>Lowest rated</option>
+        </select>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="review-card-header">
+            <div>
+              <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+            </div>
+            <span class="date">04/21/2026</span>
+          </div>
+          <div class="review-title">amazing bike</div>
+          <div class="review-body">this is an absolte weapon of a bike and looks so good.</div>
+          <div class="review-recommend">Would Recommend? Yes!</div>
+          <div class="review-divider"></div>
+          <div class="review-name">Name: Nathan</div>
+          <div class="review-divider"></div>
+          <div class="review-helpful">
+            <span class="helpful-label">Helpful?</span>
+            <span class="helpful-btn">👍 13</span>
+            <span class="helpful-btn">👎 1</span>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-card-header">
+            <div>
+              <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+            </div>
+            <span class="date">04/21/2026</span>
+          </div>
+          <div class="review-title">Great brand</div>
+          <div class="review-body">loky a really good bike</div>
+          <div class="review-recommend">Would Recommend? Yes!</div>
+          <div class="review-divider"></div>
+          <div class="review-name">Name: wammy</div>
+          <div class="review-divider"></div>
+          <div class="review-helpful">
+            <span class="helpful-label">Helpful?</span>
+            <span class="helpful-btn">👍 3</span>
+            <span class="helpful-btn">👎 0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+  </div><!-- end left-col -->
+ 
+  <!-- RIGHT STICKY PANEL -->
+  <div class="right-panel">
+    <div class="breadcrumb">
+      <a href="#">Bikes</a><span>›</span>
+      <a href="#">Mountain Bikes</a><span>›</span>
+      <a href="#">Downhill Mountain Bikes</a><span>›</span>
+      <span>Demo</span>
+    </div>
+ 
+    <h1 class="product-title">S-Works Demo 11</h1>
+    <p class="product-subtitle">SRAM XX DH, RockShox Ultimate DH</p>
+    <p class="product-price">$10,999.99</p>
+ 
+    <div class="stars">
+      <span class="star-count">5</span>
+      <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      <a href="#">2 Reviews</a>
+    </div>
+ 
+    <hr class="divider">
+ 
+    <p class="section-label"><span>Color:</span> Gloss Charcoal</p>
+    <div class="color-swatches">
+      <div class="swatch swatch-blue"></div>
+      <div class="swatch swatch-charcoal active"></div>
+    </div>
+ 
+    <hr class="divider">
+ 
+    <div class="size-widget">
+      <div class="size-widget-header">
+        <span>What's my size?</span>
+        <div class="toggle-group">
+          <span>Imperial</span>
+          <div class="toggle"></div>
+          <span>Metric</span>
+        </div>
+      </div>
+      <p class="size-hint">Enter your height and we'll calculate your size.</p>
+      <div class="size-inputs">
+        <input type="text" placeholder="ft">
+        <input type="text" placeholder="in">
+        <button>Enter</button>
+      </div>
+      <a class="size-link">More on S-Sizing</a>
+    </div>
+ 
+    <div class="size-selector-header">
+      <span>Select a Size</span>
+      <a href="#">Size Guide</a>
+    </div>
+    <div class="size-buttons">
+      <button class="size-btn">S3</button>
+      <button class="size-btn active">S4</button>
+      <button class="size-btn">S5</button>
+    </div>
+ 
+    <hr class="divider">
+ 
+    <p class="delivery-label">Select a Delivery Method</p>
+    <div class="delivery-options">
+      <div class="delivery-card">
+        <div class="d-icon">📍</div>
+        <span class="d-title">Find Nearby</span>
+        <span class="d-sub">Check store inventory</span>
+      </div>
+      <div class="delivery-card">
+        <div class="d-icon">🏪</div>
+        <span class="d-title">Pickup</span>
+        <span class="d-sub">Ship to store</span>
+      </div>
+      <div class="delivery-card">
+        <div class="d-icon">📦</div>
+        <span class="d-title">Ship</span>
+        <span class="d-sub">Ship to home</span>
+      </div>
+    </div>
+ 
+    <!-- COMPLETE YOUR RIDE -->
+    <div class="cyr-header">
+      Complete Your Ride <span>&#8964;</span>
+    </div>
+ 
+    <div class="cyr-item">
+      <!-- Replace src with your helmet image -->
+      <img src="helmet-dissident.jpg" class="cyr-img" alt="Dissident 2">
+      <div class="cyr-info">
+        <div class="cyr-name">Dissident 2</div>
+        <div class="cyr-swatch" style="background:#333;"></div>
+        <div class="cyr-price">$599.99</div>
+      </div>
+      <div>
+        <button class="cyr-btn">Choose Options</button>
+      </div>
+    </div>
+ 
+    <div class="cyr-item">
+      <!-- Replace src with your gloves image -->
+      <img src="gloves-trail-mens.jpg" class="cyr-img" alt="Men's Trail D30 Gloves">
+      <div class="cyr-info">
+        <div class="cyr-name">Men's Trail D30 Gloves</div>
+        <div class="cyr-swatch" style="background:#222;"></div>
+        <div class="cyr-price">$29.99 <span class="old">$44.99</span></div>
+      </div>
+      <div>
+        <button class="cyr-btn">Choose Options</button>
+      </div>
+    </div>
+ 
+    <div class="cyr-item">
+      <!-- Replace src with your women's gloves image -->
+      <img src="gloves-trail-womens.jpg" class="cyr-img" alt="Women's Trail D30 Gloves">
+      <div class="cyr-info">
+        <div class="cyr-name">Women's Trail D30 Gloves</div>
+        <div style="display:flex;gap:4px;">
+          <div class="cyr-swatch" style="background:#222;"></div>
+          <div class="cyr-swatch" style="background:#ccc;"></div>
+        </div>
+        <div class="cyr-price">$29.99 <span class="old">$44.99</span></div>
+      </div>
+      <div>
+        <button class="cyr-btn">Choose Options</button>
+      </div>
+    </div>
+ 
+    <div class="cyr-dots">
+      <div class="cyr-dot active"></div>
+      <div class="cyr-dot"></div>
+    </div>
+ 
+    <a class="save-later">♡ Save for Later</a>
+  <!-- STICKY BUY BAR -->
+  <div class="sticky-buy">
+    <div>
+      <div class="sticky-title">S-Works Demo 11 <span class="sticky-chevron">&#8963;</span></div>
+    </div>
+    <button class="btn-choose">Choose Options</button>
+  </div>
+  </div><!-- end right-panel -->
+ 
+</div><!-- end page-wrapper -->
+ 
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo">Specialized</div>
+    <div class="footer-socials">
+      <span title="Instagram">📷</span>
+      <span title="Facebook">📘</span>
+      <span title="YouTube">▶️</span>
+      <span title="TikTok">🎵</span>
+    </div>
+  </div>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">Bikes</a></li>
+        <li><a href="#">Road Bikes</a></li>
+        <li><a href="#">Gravel Bikes</a></li>
+        <li><a href="#">Mountain Bikes</a></li>
+        <li><a href="#">Electric Bikes</a></li>
+        <li><a href="#">City Bikes</a></li>
+        <li><a href="#">Kids Bikes</a></li>
+        <li><a href="#">Apparel</a></li>
+        <li><a href="#">Accessories</a></li>
+        <li><a href="#">Bike Parts</a></li>
+        <li><a href="#">Sale</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Installments</a></li>
+        <li><a href="#">Shipping & Delivery</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">Warranty</a></li>
+        <li><a href="#">Bike Registration</a></li>
+        <li><a href="#">Roval Registration</a></li>
+        <li><a href="#">Support Center</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="#">Bike Archive</a></li>
+        <li><a href="#">Demo and Events</a></li>
+        <li><a href="#">Safety Recall Notices</a></li>
+        <li><a href="#">Suspension Calculator</a></li>
+        <li><a href="#">Counterfeit Awareness</a></li>
+        <li><a href="#">How to Spot Fake Specialized Websites</a></li>
+        <li><a href="#">Become a Retailer</a></li>
+        <li><a href="#">Specialized Pro Program</a></li>
+        <li><a href="#">Hero Pro Program</a></li>
+        <li><a href="#">Size Guide</a></li>
+        <li><a href="#">Affiliate Program</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <ul>
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">50th Anniversary</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Innovation</a></li>
+        <li><a href="#">Stories</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">Retül</a></li>
+        <li><a href="#">Outride</a></li>
+        <li><a href="#">Specialized Custom</a></li>
+        <li><a href="#">Athletes</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Newsletter</h4>
+      <div class="newsletter-form">
+        <input type="email" placeholder="Email Address">
+        <button>→</button>
+      </div>
+      <p class="newsletter-disclaimer">By submitting your email, you consent to receive recurring automated promotional and personalized marketing emails and you acknowledge Specialized's use of your information in accordance with its Privacy Policy.</p>
+      <p style="font-size:12px;color:#888;margin-bottom:10px;">Specialized App</p>
+      <div class="app-badges">
+        <div class="app-badge">
+          <span class="badge-sub">Download on the</span>
+          <span class="badge-name">App Store</span>
+        </div>
+        <div class="app-badge">
+          <span class="badge-sub">GET IT ON</span>
+          <span class="badge-name">Google Play</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">
+      <a href="#">Privacy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Do Not Sell My Personal Information (California)</a>
+      <a href="#">California Transparency Act</a>
+      <a href="#">Cookie Settings</a>
+    </div>
+    <p class="footer-copy">© 1996-2026 Specialized Bicycle Components, Inc. All Rights Reserved.</p>
+    <div class="footer-region">🌐 United States</div>
+  </div>
+</footer>
+ 
+ 
+ 
+<script>
+  // Thumbnail active state
+  document.querySelectorAll('.thumb').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('.thumb').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+    });
+  });
+ 
+  // Size button active state
+  document.querySelectorAll('.size-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.size-btn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+    });
+  });
+ 
+  // Color swatch active state
+  document.querySelectorAll('.swatch').forEach(s => {
+    s.addEventListener('click', () => {
+      document.querySelectorAll('.swatch').forEach(x => x.classList.remove('active'));
+      s.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
