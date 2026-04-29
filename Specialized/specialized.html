@@ -311,7 +311,7 @@
   .hero-img {
     width: 100%;
     aspect-ratio: 16/9;
-    object-fit: cover;
+    object-fit: contain;
     background: #1a1a1a;
     display: block;
   }
@@ -378,8 +378,9 @@
   }
   .fullbleed-img {
     width: 100%;
-    height: 520px;
-    object-fit: cover;
+    aspect-ratio: 16/9;
+    height: auto;
+    object-fit: contain;
     display: block;
     background: #1a1a1a;
   }
@@ -408,9 +409,7 @@
  
   /* ── VIDEO SECTION ── */
   .video-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 420px;
+    display: block;
     background: #111;
   }
   .video-text {
@@ -423,8 +422,9 @@
   .video-text p { font-size: 13px; color: #aaa; margin-bottom: 24px; line-height: 1.7; }
   .video-img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    aspect-ratio: 16/9;
+    height: auto;
+    object-fit: contain;
     background: #222;
   }
  
@@ -432,7 +432,7 @@
   .card-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    background: #0a0a0a;
+    background: transparent;
   }
   .feature-card {
     position: relative;
@@ -442,13 +442,13 @@
   .feature-card-img {
     width: 100%;
     aspect-ratio: 3/4;
-    object-fit: cover;
-    background: #1a1a1a;
+    object-fit: contain;
+    background: transparent;
     display: block;
   }
   .feature-card-text {
     padding: 20px 20px 60px;
-    background: #0a0a0a;
+    background: transparent;
   }
   .feature-card-text h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
   .feature-card-text p { font-size: 13px; color: #aaa; line-height: 1.6; }
@@ -484,7 +484,7 @@
   .tech-item-img {
     width: 100%;
     aspect-ratio: 4/3;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 6px;
     background: #1a1a1a;
     display: block;
@@ -518,7 +518,7 @@
   .lower-card-img {
     width: 100%;
     aspect-ratio: 4/3;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 6px;
     background: #1a1a1a;
     display: block;
@@ -530,7 +530,7 @@
   .slideshow-img {
     width: 100%;
     height: 500px;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
     background: #1a1a1a;
   }
@@ -788,20 +788,13 @@
  
     <!-- HERO IMAGE -->
     <!-- Replace src with your actual image file path -->
-    <img src="hero-bike.jpg" class="hero-img" alt="S-Works Demo 11 hero"
+    <img src="bike 1.png" class="hero-img" alt="S-Works Demo 11 hero"
       onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
     <div class="hero-placeholder" style="display:none;">[ Hero bike image ]</div>
  
     <!-- THUMBNAIL STRIP -->
-    <div style="padding: 10px 32px; background:#0a0a0a; display:flex; gap:6px; justify-content:center; margin-left:50px;">
-      <!-- Replace src values with your thumbnail image file paths -->
-      <img src="thumb1.jpg" class="thumb active" alt="">
-      <img src="thumb2.jpg" class="thumb" alt="">
-      <img src="thumb3.jpg" class="thumb" alt="">
-      <img src="thumb4.jpg" class="thumb" alt="">
-      <img src="thumb5.jpg" class="thumb" alt="">
-      <img src="thumb6.jpg" class="thumb" alt="">
-      <img src="thumb7.jpg" class="thumb" alt="">
+    <div style="padding: 10px 32px; background:#0a0a0a; display:flex; justify-content:center; margin-left:50px;">
+      <img src="row of pictures.png" alt="Thumbnail row" style="max-width:100%; height:auto;">
     </div>
  
     <!-- THE SPEED OF TRUST + AT A GLANCE -->
@@ -840,7 +833,7 @@
     <!-- THE FRAME OF REFERENCE — full bleed with rider image + overlay text -->
     <div class="fullbleed">
       <!-- Replace src with your action rider image -->
-      <img src="rider-action.jpg" class="fullbleed-img" alt="Rider on Demo 11"
+      <img src="frame of referance.png" class="fullbleed-img" alt="Rider on Demo 11"
         onerror="this.style.background='#1a1a1a'">
  
     </div>
@@ -849,7 +842,7 @@
     <div class="video-section">
   
       <!-- Replace src with your bike detail image -->
-      <img src="bike-detail.jpg" class="video-img" alt="Demo 11 detail">
+      <img src="allyouneedtoknow.png" class="video-img" alt="Demo 11 detail">
     </div>
  
     <!-- 3-CARD FEATURE GRID -->
@@ -857,20 +850,20 @@
       <!-- Card 1: Self Aligning Chassis -->
       <div class="feature-card">
         <!-- Replace src with your rider/chassis image -->
-        <img src="chassis-rider.jpg" class="feature-card-img" alt="Self aligning chassis">
+        <img src="self aligning.png" class="feature-card-img" alt="Self aligning chassis">
         
         <div class="card-plus">+</div>
       </div>
       <!-- Card 2: Geometry -->
       <div class="feature-card">
         <!-- Replace src with your geometry diagram image -->
-        <img src="geometry-diagram.jpg" class="feature-card-img" alt="Geometry diagram">
+        <img src="geometry.png" class="feature-card-img" alt="Geometry diagram">
         <div class="card-plus">+</div>
       </div>
       <!-- Card 3: FACT Carbon -->
       <div class="feature-card">
         <!-- Replace src with your carbon fork close-up image -->
-        <img src="carbon-fork.jpg" class="feature-card-img" alt="FACT carbon construction">
+        <img src="factcarbon.png" class="feature-card-img" alt="FACT carbon construction">
         <div class="card-plus">+</div>
       </div>
     </div>
@@ -882,7 +875,7 @@
         <div class="tech-item">
           <div class="tech-img-wrap">
             <!-- Replace src with your HighGear closeup image -->
-            <img src="highgear-closeup.jpg" class="tech-item-img" alt="HighGear Drivetrain">
+            <img src="highgear drivetrain.png" class="tech-item-img" alt="HighGear Drivetrain">
             <div class="img-plus">+</div>
           </div>
         </div>
@@ -1137,46 +1130,8 @@
       Complete Your Ride <span>&#8964;</span>
     </div>
  
-    <div class="cyr-item">
-      <!-- Replace src with your helmet image -->
-      <img src="helmet-dissident.jpg" class="cyr-img" alt="Dissident 2">
-      <div class="cyr-info">
-        <div class="cyr-name">Dissident 2</div>
-        <div class="cyr-swatch" style="background:#333;"></div>
-        <div class="cyr-price">$599.99</div>
-      </div>
-      <div>
-        <button class="cyr-btn">Choose Options</button>
-      </div>
-    </div>
- 
-    <div class="cyr-item">
-      <!-- Replace src with your gloves image -->
-      <img src="gloves-trail-mens.jpg" class="cyr-img" alt="Men's Trail D30 Gloves">
-      <div class="cyr-info">
-        <div class="cyr-name">Men's Trail D30 Gloves</div>
-        <div class="cyr-swatch" style="background:#222;"></div>
-        <div class="cyr-price">$29.99 <span class="old">$44.99</span></div>
-      </div>
-      <div>
-        <button class="cyr-btn">Choose Options</button>
-      </div>
-    </div>
- 
-    <div class="cyr-item">
-      <!-- Replace src with your women's gloves image -->
-      <img src="gloves-trail-womens.jpg" class="cyr-img" alt="Women's Trail D30 Gloves">
-      <div class="cyr-info">
-        <div class="cyr-name">Women's Trail D30 Gloves</div>
-        <div style="display:flex;gap:4px;">
-          <div class="cyr-swatch" style="background:#222;"></div>
-          <div class="cyr-swatch" style="background:#ccc;"></div>
-        </div>
-        <div class="cyr-price">$29.99 <span class="old">$44.99</span></div>
-      </div>
-      <div>
-        <button class="cyr-btn">Choose Options</button>
-      </div>
+    <div style="padding: 8px 0;">
+      <img src="complete your ride.png" alt="Complete Your Ride" style="width:100%; height:auto; border-radius:6px;">
     </div>
  
     <div class="cyr-dots">
