@@ -1,7 +1,6 @@
 var lootBox = document.getElementById("lootbox");
 var rollButton = document.getElementById("roll");
 
-// Counter object to track each rarity
 var counts = {
     common: 0,
     uncommon: 0,
@@ -10,7 +9,6 @@ var counts = {
     mythic: 0
 };
 
-// Create a counter display div
 var counter = document.createElement("div");
 counter.id = "counter";
 document.body.appendChild(counter);
@@ -57,7 +55,6 @@ function rollLootBox() {
     updateCounter();
 }
 
-// Show zeroed-out counter on load
 updateCounter();
 
 rollButton.addEventListener("click", rollLootBox);
