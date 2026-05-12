@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+ 
+  <div class="quiz-wrap">
+    <h1 class="quiz-title">Quiz</h1>
+    <p class="quiz-subtitle">5 questions · Choose one answer per question</p>
+ 
+    <div class="q-card" id="card1">
+      <p class="q-num">Question 1</p>
+      <p class="q-text">filler</p>
+      <label class="option-label"><input type="radio" name="q1" value="a"> a</label>
+      <label class="option-label"><input type="radio" name="q1" value="b"> b</label>
+      <label class="option-label"><input type="radio" name="q1" value="c"> c</label>
+      <label class="option-label"><input type="radio" name="q1" value="d"> d</label>
+      <div class="feedback" id="fb1"></div>
+    </div>
+ 
+    <div class="q-card" id="card2">
+      <p class="q-num">Question 2</p>
+      <p class="q-text">filler?</p>
+      <label class="option-label"><input type="radio" name="q2" value="a"> a</label>
+      <label class="option-label"><input type="radio" name="q2" value="b"> b</label>
+      <label class="option-label"><input type="radio" name="q2" value="c"> c</label>
+      <label class="option-label"><input type="radio" name="q2" value="d"> d</label>
+      <div class="feedback" id="fb2"></div>
+    </div>
+ 
+    <div class="q-card" id="card3">
+      <p class="q-num">Question 3</p>
+      <p class="q-text">filler?</p>
+      <label class="option-label"><input type="radio" name="q3" value="a"> a</label>
+      <label class="option-label"><input type="radio" name="q3" value="b"> b</label>
+      <label class="option-label"><input type="radio" name="q3" value="c"> c</label>
+      <label class="option-label"><input type="radio" name="q3" value="d"> d</label>
+      <div class="feedback" id="fb3"></div>
+    </div>
+ 
+    <div class="q-card" id="card4">
+      <p class="q-num">Question 4</p>
+      <p class="q-text">filler?</p>
+      <label class="option-label"><input type="radio" name="q4" value="a"> a</label>
+      <label class="option-label"><input type="radio" name="q4" value="b"> b</label>
+      <label class="option-label"><input type="radio" name="q4" value="c"> c</label>
+      <label class="option-label"><input type="radio" name="q4" value="d"> d</label>
+      <div class="feedback" id="fb4"></div>
+    </div>
+ 
+    <div class="q-card" id="card5">
+      <p class="q-num">Question 5</p>
+      <p class="q-text">filler?</p>
+      <label class="option-label"><input type="radio" name="q5" value="a"> a</label>
+      <label class="option-label"><input type="radio" name="q5" value="b"> b</label>
+      <label class="option-label"><input type="radio" name="q5" value="c"> c</label>
+      <label class="option-label"><input type="radio" name="q5" value="d"> d</label>
+      <div class="feedback" id="fb5"></div>
+    </div>
+ 
+    <button class="submit-btn" id="submitBtn">Submit answers</button>
+    <div class="result-box" id="resultBox"></div>
+  </div>
+ 
+  <script src="script.js" defer></script>
+</body>
+</html>
